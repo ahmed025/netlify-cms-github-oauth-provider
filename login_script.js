@@ -1,12 +1,19 @@
-
-const REQUIRED_ORIGIN_PATTERN = 
-  /^((\*|([\w_-]{2,}))\.)*(([\w_-]{2,})\.)+(\w{2,})(\,((\*|([\w_-]{2,}))\.)*(([\w_-]{2,})\.)+(\w{2,}))*$/
-
-if (!process.env.ORIGINS.match(REQUIRED_ORIGIN_PATTERN)) {
-  throw new Error('process.env.ORIGINS MUST be comma separated list \
-    of origins that login can succeed on.')
+// First validate the env exists
+if (!process.env.ORIGINS) {
+  throw new Error('ORIGINS environment variable is required');
 }
+
+// Split and clean origins
 const origins = process.env.ORIGINS.split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+
+if (!origins.length) {
+  throw new Error('No valid origins provided in ORIGINS');
+}
+
+// Optional: Add debug logging
+console.log('Allowed origins:', origins);
 
 
 module.exports = (oauthProvider, message, content) => `
