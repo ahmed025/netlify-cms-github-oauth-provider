@@ -1,3 +1,16 @@
+// Add this at the VERY TOP
+require('dotenv').config(); // Remove {silent: true} to see errors
+console.log('[DEBUG] Environment:', {
+  ORIGINS: process.env.ORIGINS,
+  NODE_ENV: process.env.NODE_ENV
+});
+
+const express = require('express')
+const middleWarez = require('./index.js')
+const port = process.env.PORT || 3000
+
+// Rest of your existing code...
+
 require('dotenv').config({ silent: true })
 const express = require('express')
 const middleWarez = require('./index.js')
